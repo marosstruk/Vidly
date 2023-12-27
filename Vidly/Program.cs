@@ -1,4 +1,10 @@
+using Microsoft.EntityFrameworkCore;
+using Vidly.Data;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<VidlyContext>(options =>
+    options.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=Vidly;Trusted_Connection=True;TrustServerCertificate=True;"));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
