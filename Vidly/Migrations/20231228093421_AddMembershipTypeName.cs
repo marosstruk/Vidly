@@ -20,7 +20,7 @@ namespace Vidly.Migrations
             migrationBuilder.UpdateData(
                 table: "MembershipType",
                 keyColumn: "Id",
-                keyValues: [0, 1, 2, 3],
+                keyValues: [1, 2, 3, 4],
                 column: "Name",
                 values: ["Not Subscribed", "Pay as You Go", "Monthly", "Yearly"]);
         }
