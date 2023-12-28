@@ -3,8 +3,12 @@ using Vidly.Models;
 
 namespace Vidly.ViewModels
 {
-    public class NewCustomerViewModel
+    public class CustomerFormViewModel
     {
+        public string? Action { get; set; }
+
+        public int Id { get; set; }
+
         public string? Name { get; set; }
 
         [Display(Name = "Date of Birth")]
