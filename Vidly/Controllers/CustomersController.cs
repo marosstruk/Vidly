@@ -1,25 +1,28 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Vidly.Models;
+using Microsoft.EntityFrameworkCore;
+using Vidly.Data;
 
 namespace Vidly.Controllers
 {
     public class CustomersController : Controller
     {
-        private List<Customer> _customers =
-        [
-            new() { Id = 1, Name = "John Smith" },
-            new() { Id = 2, Name = "Marry Williams" }
-        ];
+        private readonly VidlyContext _context;
+
+        public CustomersController(VidlyContext context)
+        {
+            _context = context;
+        }
 
         public IActionResult Index()
         {
-            return View(_customers);
+            var customers = _context.Customers.Include(c => c.MembershipType);
+            return View(customers);
         }
 
         [Route("customers/details/{id:int}")]
         public IActionResult Details(int id)
         {
-            var customer = _customers.SingleOrDefault(c => c.Id == id);
+            var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
 
             if (customer == null)
                 return NotFound();
