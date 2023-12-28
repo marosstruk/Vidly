@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Vidly.Data;
+using Vidly.Models;
 using Vidly.ViewModels;
 
 namespace Vidly.Controllers
@@ -41,9 +42,12 @@ namespace Vidly.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(NewCustomerViewModel viewModel)
+        public IActionResult Create(Customer customer)
         {
-            return View();
+            _context.Customers.Add(customer);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Customers");
         }
     }
 }
