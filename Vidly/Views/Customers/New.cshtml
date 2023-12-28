@@ -1,4 +1,4 @@
-﻿@model Vidly.Models.Customer
+﻿@model Vidly.ViewModels.NewCustomerViewModel
 
 @{
     ViewBag.Title = "New Customer";
@@ -21,5 +21,10 @@
             @Html.LabelFor(m => m.IsSubscribedToNewsletter)
             @Html.CheckBoxFor(m => m.IsSubscribedToNewsletter, new { @class = "form-check-input" })
         </div>
+        <div class="form-group mb-3">
+            @Html.LabelFor(m => m.MembershipTypeId)
+            @Html.DropDownListFor(m => m.MembershipTypeId, new SelectList(Model.MembershipTypes, "Id", "Name"), "", new { @class = "form-select" })
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
     }
 </div>

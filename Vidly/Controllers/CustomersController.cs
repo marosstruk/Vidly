@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Vidly.Data;
+using Vidly.ViewModels;
 
 namespace Vidly.Controllers
 {
@@ -32,6 +33,15 @@ namespace Vidly.Controllers
         }
 
         public IActionResult New()
+        {
+            var membershipTypes = _context.MembershipTypes.ToList();
+            var viewModel = new NewCustomerViewModel { MembershipTypes = membershipTypes };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Create(NewCustomerViewModel viewModel)
         {
             return View();
         }
