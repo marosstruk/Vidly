@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Vidly.Data;
+using Vidly.Models;
+using Vidly.ViewModels;
 
 namespace Vidly.Controllers
 {
@@ -11,29 +13,6 @@ namespace Vidly.Controllers
         public MoviesController(VidlyContext context)
         {
             _context = context;
-        }
-
-        //public IActionResult Random()
-        //{
-        //    var movie = new Movie() { Id = 1, Name = "Shrek!" };
-        //    var customers = new List<Customer>
-        //    {
-        //        new() { Id = 1, Name= "Customer 1" },
-        //        new() { Id = 2, Name= "Customer 2" }
-        //    };
-        //    var viewModel = new RandomMovieViewModel
-        //    {
-        //        Movie = movie,
-        //        Customers = customers
-        //    };
-
-        //    return View(viewModel);
-        //}
-
-        [Route("movies/released/{year:regex(\\d{{4}})}/{month:range(1, 12)}")]
-        public IActionResult ByReleaseDate(int year, int month)
-        {
-            return Content(year + "/" + month);
         }
 
         public IActionResult Index()
@@ -48,6 +27,57 @@ namespace Vidly.Controllers
                 .SingleOrDefault(m => m.Id == id);
 
             return View(movie);
+        }
+
+        public IActionResult New()
+        {
+            var genres = _context.Genres.ToList();
+            var viewModel = new MovieFormViewModel
+            {
+                Action = "New",
+                Genres = genres
+            };
+
+            return View("MovieForm", viewModel);
+        }
+
+        public IActionResult Edit(int id)
+        {
+            var movie = _context.Movies.SingleOrDefault(m => m.Id == id);
+
+            if (movie == null)
+                return NotFound();
+
+            var viewModel = new MovieFormViewModel
+            {
+                Action = "Edit",
+                Id = id,
+                Name = movie.Name,
+                ReleaseDate = movie.ReleaseDate,
+                NumberInStock = movie.NumberInStock,
+                GenreId = movie.GenreId,
+                Genres = _context.Genres.ToList(),
+            };
+
+            return View("MovieForm", viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Save(Movie movie)
+        {
+            if (movie.Id == 0)
+            {
+                movie.DateAdded = DateOnly.FromDateTime(DateTime.Now);
+                _context.Movies.Add(movie);
+            }
+            else
+            {
+                _context.Movies.Update(movie);
+            }
+
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Movies");
         }
     }
 }
