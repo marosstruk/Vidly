@@ -52,16 +52,8 @@ namespace Vidly.Controllers
             if (customer == null)
                 return NotFound();
 
-            var viewModel = new CustomerFormViewModel
-            {
-                Action = "Edit",
-                Id = id,
-                Name = customer.Name,
-                Birthdate = customer.Birthdate,
-                IsSubscribedToNewsletter = customer.IsSubscribedToNewsletter,
-                MembershipTypeId = customer.MembershipTypeId,
-                MembershipTypes = _context.MembershipTypes.ToList(),
-            };
+            var membershipTypes = _context.MembershipTypes.ToList();
+            var viewModel = new CustomerFormViewModel("Edit", customer, membershipTypes);
 
             return View("CustomerForm", viewModel);
         }

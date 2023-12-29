@@ -3,10 +3,8 @@ using Vidly.Models;
 
 namespace Vidly.ViewModels
 {
-    public class MovieFormViewModel
+    public class MovieFormViewModel : FormViewModel<Movie>
     {
-        public string? Action { get; set; }
-
         public int Id { get; set; }
 
         public string? Name { get; set; }
@@ -21,5 +19,15 @@ namespace Vidly.ViewModels
         public short GenreId { get; set; }
 
         public IEnumerable<Genre>? Genres { get; set; }
+
+        public MovieFormViewModel() : base()
+        {
+        }
+
+        public MovieFormViewModel(string action, Movie movie, IEnumerable<Genre> genres)
+            : base(action, movie)
+        {
+            Genres = genres;
+        }
     }
 }

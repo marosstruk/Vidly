@@ -3,10 +3,8 @@ using Vidly.Models;
 
 namespace Vidly.ViewModels
 {
-    public class CustomerFormViewModel
+    public class CustomerFormViewModel : FormViewModel<Customer>
     {
-        public string? Action { get; set; }
-
         public int Id { get; set; }
 
         public string? Name { get; set; }
@@ -21,5 +19,15 @@ namespace Vidly.ViewModels
         public byte MembershipTypeId { get; set; }
 
         public IEnumerable<MembershipType>? MembershipTypes { get; set; }
+
+        public CustomerFormViewModel() : base()
+        {
+        }
+
+        public CustomerFormViewModel(string action, Customer customer, IEnumerable<MembershipType> membershipTypes)
+            : base(action, customer)
+        {
+            MembershipTypes = membershipTypes;
+        }
     }
 }

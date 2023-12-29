@@ -48,16 +48,8 @@ namespace Vidly.Controllers
             if (movie == null)
                 return NotFound();
 
-            var viewModel = new MovieFormViewModel
-            {
-                Action = "Edit",
-                Id = id,
-                Name = movie.Name,
-                ReleaseDate = movie.ReleaseDate,
-                NumberInStock = movie.NumberInStock,
-                GenreId = movie.GenreId,
-                Genres = _context.Genres.ToList(),
-            };
+            var genres = _context.Genres.ToList();
+            var viewModel = new MovieFormViewModel("Edit", movie, genres);
 
             return View("MovieForm", viewModel);
         }
