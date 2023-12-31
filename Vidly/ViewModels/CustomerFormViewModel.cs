@@ -7,6 +7,7 @@ namespace Vidly.ViewModels
     {
         public int Id { get; set; }
 
+        [Required]
         public string? Name { get; set; }
 
         [Display(Name = "Date of Birth")]
@@ -15,6 +16,7 @@ namespace Vidly.ViewModels
         [Display(Name = "Subscribe to Newsletter")]
         public bool IsSubscribedToNewsletter { get; set; }
 
+        [Required]
         [Display(Name = "Select Membership Type")]
         public byte MembershipTypeId { get; set; }
 
