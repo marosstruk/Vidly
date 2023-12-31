@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<VidlyContext>(options =>
     options.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=Vidly;Trusted_Connection=True;TrustServerCertificate=True;"));
 
+builder.Services.AddAutoMapper(typeof(Program));
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
